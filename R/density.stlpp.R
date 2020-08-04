@@ -17,7 +17,7 @@ density.stlpp <- function(x,lbw,tbw,at=c("points","pixels"),dimt=512,...){
   stint <- 0 # define the vacant vector to save the densities values per points
   
   if (missing(tbw)) {
-    d <- density(ot)
+    d <- density(ot,n=dimt)
   }
   else{
     d <- density(ot,bw=tbw,n=dimt)
@@ -31,7 +31,7 @@ density.stlpp <- function(x,lbw,tbw,at=c("points","pixels"),dimt=512,...){
   }
   ############################################## space intensity
   
-  pX <- as.stlpp.lpp(x)
+  pX <- as.lpp.stlpp(x)
   if (missing(lbw)) lbw <- bw.scott.iso(pX)
   
   if(at=="points"){
@@ -51,13 +51,15 @@ density.stlpp <- function(x,lbw,tbw,at=c("points","pixels"),dimt=512,...){
   
   
   names(lbw) <- NULL
-  if(at=="points") class(out) <- c("numeric","stlppint")
+  if(at=="points") class(out) <- c("numeric")
   if(at=="pixels") class(out) <- c("list","stlppint")
   
   attr(out,"tempden") <- d
   attr(out,"netint") <- ldens
   attr(out,"time") <- ot
   attr(out,"bw") <- c("sigma_l"=lbw,"sigma_t"=d$bw)
+  attr(out,"stlpp") <- x
+  
   
   return(out)
   

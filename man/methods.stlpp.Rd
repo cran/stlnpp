@@ -6,6 +6,11 @@
 \alias{print.stlpp}
 \alias{print.stlppint}
 \alias{print.sumstlpp}
+\alias{[.stlpp}
+\alias{[.stlppint}
+\alias{as.linim.stlppint}
+\alias{as.tppint.stlppint}
+
 
 
 \title{
@@ -22,18 +27,39 @@ facets = FALSE, ticktype = "detailed", resfac = 5,xlab="r = distance",ylab="t = 
 \method{print}{stlpp}(x,...)
 \method{print}{stlppint}(x,...)
 \method{print}{sumstlpp}(x,...)
+\method{[}{stlpp}(x,i)
+\method{[}{stlppint}(x,i)
+\method{as.linim}{stlppint}(X,...)
+\method{as.tppint}{stlppint}(x)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{x}{an object of classes \code{\link{stlpp}}, stlppint or sumstlpp
+\item{x,X}{an object of classes \code{\link{stlpp}}, stlppint or sumstlpp
 }
-\item{style}{style of plot.}
-\item{theta,phi}{see \link[plot3D]{persp3D}.}
-\item{facets,ticktype}{see \link[plot3D]{persp3D}.}
-\item{resfac}{see \link[plot3D]{persp3D}.}
-\item{xlab,ylab}{the x,y label of the plot.}
-\item{xlim}{giving the x limits for the plot.}
-\item{...}{ gracphical arguments passed to \code{\link{plot}}/\code{\link{print}}.}
+\item{style}{
+style of plot
+}
+\item{theta,phi}{
+see \link[plot3D]{persp3D}
+}
+\item{facets,ticktype}{
+see \link[plot3D]{persp3D}
+}
+\item{resfac}{
+see \link[plot3D]{persp3D}
+}
+\item{xlab,ylab}{
+the x,y label of the plot
+}
+\item{xlim}{
+giving the x limits for the plot
+}
+\item{i}{
+numeric, logical, or an object of class \code{\link{stlpp}}
+}
+\item{...}{
+either ignore for \code{\link{as.linim}}, or
+gracphical arguments passed to \code{\link{plot}}/\code{\link{print}}
+}
 }
 \author{
 Mehdi Moradi <m2.moradi@yahoo.com>

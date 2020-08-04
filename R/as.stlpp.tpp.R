@@ -1,22 +1,25 @@
 #' @export
-tpp <- function(X){
+tpp <- function(X,a,b){
   
   stopifnot(inherits(X,"numeric") | inherits(X,"integer") | inherits(X,"vector"))
   out <- ppx(data=X,coord.type = c("t"))
   names(out$data) <- "t"
   class(out) <- c("tpp","ppx")
-  out$time <- round(range(X),4)
+  if(missing(a)) a <- floor(min(X))
+  if(missing(b)) b <- ceiling(max(X))
+  out$time <- c(a,b)
   return(out)
   
 }
 
 #' @export
-as.stlpp.tpp <- function(X){
-  if(!any(class(X)=="stlpp")) stop("class(X) must be stlpp")
-  out <- ppx(data=X$data$t,coord.type = c("t"))
-  names(out$data) <- "t"
-  class(out) <- c("tpp","ppx")
-  out$time <- X$time
+as.tpp.stlpp <- function(X){
+  if(!any(class(X)=="stlpp")) stop("X must be of class stlpp")
+  out <- tpp(X$data$t)
+  # out <- ppx(data=X$data$t,coord.type = c("t"))
+  # names(out$data) <- "t"
+  # class(out) <- c("tpp","ppx")
+  # out$time <- X$time
   return(out)
 }
 
@@ -66,7 +69,14 @@ density.tpp <- function(x,tbw,at=c("points","pixels"),...){
   attr(out,"tempden") <- d
   attr(out,"bw") <- d$bw
   attr(out,"time") <- x$data$t
-  class(out) <- c("tppint")
+  attr(out,"tpp") <- x
+  attr(out,"tgrid") <- d$x
+  if(at=="points"){
+    class(out) <- c("numeric")  
+  }else{
+    class(out) <- c("tppint")
+  }
+  
   return(out)
 }
 
@@ -76,17 +86,71 @@ print.tppint <- function(x,...){
 }
 
 #' @export
-plot.tppint <- function(x,xlab=xlab,xlim=xlim,line=2.5,...){
+plot.tppint <- function(x,xlab=xlab,xlim=xlim,line=2.5,main=NULL,...){
   if (inherits(x, "tppint") == FALSE) stop(" x must be from class tppint")
   t <- attr(x,"time")
-  d <- attr(x,"tempden")
-  int <- length(t)*d$y
   
-  if (missing(xlim)) xlim <- range(d$x)
-  OK <- d$x>=range(xlim)[1] & d$x<=range(xlim)[2]
+  if(!is.null(attr(x,"tempden"))){
+    d <- attr(x,"tempden")
+    int <- length(t)*d$y
+    tgrid <- d$x
+  }else{
+    tgrid <- attr(x,"tgrid")
+    int <- x 
+  }
+  
+  
+  if (missing(xlim)) xlim <- range(tgrid)
+  
+  OK <- tgrid>=range(xlim)[1] & tgrid<=range(xlim)[2]
+  
   if (missing(xlab)) xlab <- "time"
-  plot(d$x[OK],int[OK],
-       ylab="",main="",type="l",ylim = c(0,max(int,table(round(t)))),xlab=xlab,xlim = xlim,...)
+  
+  plot(tgrid[OK],as.numeric(int)[OK],
+       ylab="",main=main,type="l",ylim = c(0,max(int,table(round(t)))),xlab=xlab,xlim = xlim,...)
   points(table(round(t)))
   title(ylab=expression(hat(lambda)[time]), line=line,cex=3,...)
+}
+
+
+#' @export
+"[.tpp" <- function(x, i) {
+  stopifnot(any(class(i)=="numeric", class(i)=="logical"))
+  
+  d <- as.data.frame(x$data[i,])
+  out <- tpp(d$t)
+  out$time <- x$time
+  return(out)
+}
+
+
+#' @export
+"[.tppint" <- function(x, i){
+  
+  stopifnot(any(class(i)=="tpp", class(i)=="numeric", class(i)=="logical"))
+  
+  if(inherits(i, "tpp")){
+    
+    if(!is.null(attr(x,"tgrid"))){
+      tgrid <- attr(x,"tgrid")  
+    }else{
+      tgrid <- attr(x,"tempden")$x
+    }
+    
+    t <- i$data$t
+    n <- npoints(i)
+    # is <- as.lpp.stlpp(i)
+    
+    id <- findInterval(t,tgrid)
+    id[which(id==0)] <- 1
+    out <- c()
+    for (j in 1:n){
+      out[j] <- as.numeric(x)[id[j]]
+    }
+    return(out)
+  }
+  else{
+    tp <- attr(x,"tpp")
+    return(x[tp][as.numeric(i)])
+  }
 }
