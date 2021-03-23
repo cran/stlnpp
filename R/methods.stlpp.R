@@ -10,7 +10,7 @@
 #' @export
 "[.stlppint" <- function(x, i){
   
-  stopifnot(any(class(i)=="stlpp", class(i)=="numeric"))
+  stopifnot(any(class(i)=="stlpp", class(i)=="numeric" , class(i)=="integer"))
   
   if(inherits(i, "stlpp")){
     
@@ -27,8 +27,9 @@
     id <- findInterval(t,tgrid)
     id[which(id==0)] <- 1
     out <- c()
-    for (i in 1:n){
-      out[i] <- x[[(id[i])]][is[i]]
+    for (j in 1:n){
+      p <- is[j]
+      out[j] <- as.im(x[[(id[j])]])[p]
     }
     return(out)
   }
@@ -39,6 +40,16 @@
 }
 
 
+#' @export
+"[[.stlppint" <- function(x, i){
+  
+  stopifnot(any(class(i)=="numeric" , class(i)=="integer"))
+  
+  out <- unclass(x)[i]
+  if(length(i)==1) out <- out[[1]]
+  return(out)
+  
+}
 
 #' @export
 as.data.frame.sumstlpp <- function(x,...){
