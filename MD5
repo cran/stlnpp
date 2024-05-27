@@ -1,12 +1,12 @@
-884aeb57d871566ebd2f612617da051f *DESCRIPTION
-ee53be08f2b18912bfa1fbaa9f3d774a *NAMESPACE
+549e41b88eb4e60904a769da9743f25d *DESCRIPTION
+d38eb3bd64e9fed37ec7f8622ca22731 *NAMESPACE
 fe29f5aa9d49ea540cbf1c243ea34a5b *R/as.lpp.stlpp.R
 9773342e4eb1d6b67dc34cbd33d5d816 *R/as.stlpp.R
 922c27ad7d365383ce74348d98141ac6 *R/as.stlpp.tpp.R
 2c9e46c8c485c571de05a08909ec6290 *R/as.tpp.stlpp.R
 b838a558010768691d085223e1e7c4ba *R/density.stlpp.R
 141774515de3c272069748ed270205a9 *R/density.tpp.R
-585a011c4a63f0add40dac418fb0d602 *R/densityVoronoi.stlpp.R
+3cf0ee5c5e0effdb5e48dcbb30b50e80 *R/densityVoronoi.stlpp.R
 15089d345a0f753832452f919df9cf18 *R/densityVoronoi.tpp.R
 15fd2cca7d6886038eb4d6b52f0d26e7 *R/methods.stlpp.R
 b7e016185fb4fe4b0400bc1f3494b1ce *R/plot.stlpp.R
@@ -19,7 +19,7 @@ ae3206c48ab95c820ee14d3b0a8c2948 *R/print.stlpp.R
 6018b51fd9dcc854793f523eb08a0bec *R/stlk.R
 adfca39742afdfbcdc6890ff7e18d569 *R/stlkinhom.R
 3e0327cd79d7244ac6fc025ccee2a80e *R/stlpp.R
-9189779766e23b052ecd6942a2aba8d3 *R/tpp.R
+1cbfe779d24f59e655c7424d0f45c90c *R/tpp.R
 65295e8c6b96f73751c3792088faaeb5 *R/unique.stlpp.R
 b544e66a34be6808a5102147d06919d8 *README.md
 4d14f7a40a8795713eda93a21eafebcf *data/Eastbourne.rda
